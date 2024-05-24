@@ -68,8 +68,16 @@ public class FilteringServiceImpl implements IFilteringService{
 
 	@Override
 	public ArrayList<Course> selectCoursesByStudentId(long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if(id < 1) throw new Exception("Id should be positive");
+		
+		if(!studentRepo.existsById(id)) 
+			throw new Exception("Student with id (" + id + ") is not in the system");
+		
+		ArrayList<Course> result = courseRepo.findByGradesStudentIds(id);
+		
+		if(result.isEmpty()) throw new Exception("Student with id (" + id + ") has not any course");
+		
+		return result;
 	}
 
 
