@@ -8,9 +8,9 @@ import lv.venta.model.Grade;
 public interface IFilteringService {
 
 	public abstract ArrayList<Grade> selectFailedGradesInSystem() throws Exception;
-	public abstract ArrayList<Grade> selectGradesByStudentId(int id) throws Exception;
-	public abstract ArrayList<Course> selectCoursesByStudentId(int id) throws Exception;
-	public abstract ArrayList<Course> selectCoursesByProfessorId(int id)throws Exception;
-	public abstract float calculateAVGGradeInCourseId(int id)throws Exception;
+	public abstract ArrayList<Grade> selectGradesByStudentId(long id) throws Exception;
+	public abstract ArrayList<Course> selectCoursesByStudentId(long id) throws Exception;
+	public abstract ArrayList<Course> selectCoursesByProfessorId(long id)throws Exception;
+	public abstract float calculateAVGGradeInCourseId(long id)throws Exception;
 	
 }
