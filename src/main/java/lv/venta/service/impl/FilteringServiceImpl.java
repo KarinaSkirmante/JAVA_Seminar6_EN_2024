@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import lv.venta.model.Course;
 import lv.venta.model.Grade;
+import lv.venta.repo.ICourseRepo;
 import lv.venta.repo.IGradeRepo;
+import lv.venta.repo.IProfessorRepo;
 import lv.venta.repo.IStudentRepo;
 import lv.venta.service.IFilteringService;
 
@@ -19,6 +21,12 @@ public class FilteringServiceImpl implements IFilteringService{
 	
 	@Autowired
 	private IStudentRepo studentRepo;
+	
+	@Autowired
+	private IProfessorRepo profRepo;
+	
+	@Autowired
+	private ICourseRepo courseRepo;
 	
 	@Override
 	public ArrayList<Grade> selectFailedGradesInSystem() throws Exception {
@@ -46,8 +54,16 @@ public class FilteringServiceImpl implements IFilteringService{
 	
 	@Override
 	public ArrayList<Course> selectCoursesByProfessorId(long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if(id < 1) throw new Exception("Id should be positive");
+		
+		if(!profRepo.existsById(id)) 
+			throw new Exception("Professor with id (" + id + ") is not in the system");
+		
+		ArrayList<Course> result = courseRepo.findByProfessorIdp(id);
+		
+		if(result.isEmpty()) throw new Exception("Professor with id (" + id + ") has not any course");
+
+		return result;
 	}
 
 	@Override
